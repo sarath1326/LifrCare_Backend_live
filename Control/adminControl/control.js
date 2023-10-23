@@ -1,6 +1,7 @@
 
 
 
+const { model } = require("mongoose");
 const DB = require("../../model/Schema");
 
 
@@ -89,7 +90,50 @@ module.exports = {
 
         })
 
-    }
+    },
+
+    
+
+    // add Doctor op sesssion 
+
+
+      add_doctor:(data)=>{
+
+          const {doctoeName , depo }=data
+
+           return new Promise((resolve,reject)=>{
+
+                try {
+
+                     DB.opSchma.updateOne({department:depo},{
+
+                         $push:{
+                            doctors:doctoeName
+
+                         }
+                     }).then((respo)=>{
+
+                        console.log(respo);
+
+                            resolve();
+
+                     }).catch(err=>{
+
+                         reject();
+                     
+                        });
+
+                      
+                    
+                } catch (error) {
+
+                    reject();
+                    
+                }
+
+           })
+
+      }
 
 
 
