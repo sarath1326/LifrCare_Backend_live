@@ -6,12 +6,28 @@ const cors=require('cors')
 const userrouter=require("./Router/userrouter/Router");
 const managmentrouter= require("./Router/managementrouter/Router");
 const dataBase=require("./model/DBconnect");
+const cookieparser=require("cookie-parser");
+const bodyparser= require("body-parser")
 
 
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use(cors());
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended:true}))
+app.use(cors(
+
+
+      {
+        origin:"http://localhost:3000",
+        methods:["GET","POST","DELETE"],
+        credentials:true
+      }
+
+
+
+));
+app.use(cookieparser());
 
 
 app.use("/",userrouter);

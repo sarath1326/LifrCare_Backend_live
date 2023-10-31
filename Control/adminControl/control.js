@@ -26,6 +26,7 @@ module.exports = {
                     department: data.department,
                     availabel: data.avilabelday,
                     time: data.time,
+                    fees:data.fees,
                     doctors: doctors_arry
 
                 }
