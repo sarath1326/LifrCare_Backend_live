@@ -4,6 +4,7 @@ const express = require("express");
 const router = express();
 const control = require("../../Control/userControl/control");
 const jwt = require("jsonwebtoken");
+const Razorpay=require("../../Razorpya/instance")
 
 
 
@@ -250,40 +251,77 @@ router.post("/conform_booking", verifiAuth, async (req, res) => {
    const token = req.cookies.lifeCarejwt;
    const userData = await jwt.verify(token, "sarath1937")
 
-   const { id } = userData;
+   const { id,name } = userData;
 
-
-   if (pyment === "COP") {
-
-
-      const data = {
+       const data = {
          userid: id,
+         username:name,
          form: req.body
       }
 
-      control.opbooking_placed(data).then(() => {
+      control.opbooking_placed(data).then((respo) => {
 
-         res.json({ flag: true });
-         return;
+         if(respo. paystatus==="conform"){
+            
+
+                res.json({flag:true});
+                return;
+         
+               }else{
+
+                  Razorpay.generateRazorpay(respo._id,respo.fees).then((order)=>{
+
+                   res.json({rez:true,razor_oder:order})
+                     return
+                  
+                  }).catch(err=>{
+
+                     console.log("razorpya err")
 
 
-      }).catch(err => {
+                       
+                  })
+               
+               }
+            }).catch(err => {
 
          res.json({ flag: false });
          return;
 
       });
+   
+   });
 
 
-   } else {
-
-       console.log("online pyment ")
+   router.post("/razorpya_verification",(req,res)=>{
 
 
-   }
+      Razorpay.pyment_verify(req.body).then(()=>{
+
+         control.online_pyment_status_change(req.body).then(()=>{
 
 
-});
+                  res.json({flag:true})
+                  return
+        
+               }).catch(err=>{
+
+            res.json({flag:true})
+            return
+         
+         })
+      
+      }).catch(err=>{
+
+          res.json({flag:false})
+          return 
+    
+    
+         })
+
+       
+           
+   })
 
 
 

@@ -2,6 +2,8 @@
 
 const DB = require("../../model/Schema");
 const bcrypt = require("bcrypt");
+const {otpGen}=require("otp-gen-agent");
+const email=require("../../email/bookingemail")
 
 
 
@@ -208,9 +210,21 @@ module.exports = {
 
            const { pyment,gender,data,department,fees}=values.form ;
           
-        return new Promise((resolve,reject)=>{
+        return new Promise(async(resolve,reject)=>{
 
             try {
+
+            const id=await otpGen();
+
+            const sentdata={
+                email: data.email,
+                name:values.username,
+               doctername:data.doctername,
+               patientname:data.patientname,
+               date:data.date
+                }
+
+                const pymentstatus= pyment === "COP" ? "conform" : "pending" ;
 
 
                 const formDAta={
@@ -228,25 +242,38 @@ module.exports = {
                     pyment:pyment,
                     gender: gender,
                     fees:fees,
-                    marking:true
+                    marking:true,
+                    bookingid:id,
+                    paystatus:pymentstatus
+                    
                    }
 
+                const final=new DB.booking_schema(formDAta);
 
-                 const final=new DB.booking_schema(formDAta)
+                 final.save().then((respo)=>{
 
-                 final.save().then(()=>{
+                    email.bookingemail(sentdata).then( ()=>{
 
-                       resolve();
-                 
-                    }).catch(err=>{
+                   resolve(respo);
+                
+               
+                }).catch(err=>{
 
-                         reject(err);
+                     reject()
+                  
+                  
+                    })
+                
+              }).catch(err=>{
+
+                  reject(err);
 
 
                  });
                 
-                } catch (error) {
+                }catch (error) {
 
+                    
                     reject(error);
                 
             
@@ -258,6 +285,60 @@ module.exports = {
 
              
            
+    },
+
+
+    
+    online_pyment_status_change:(data)=>{
+
+       
+
+
+        console.log("status change call")
+
+        const {order}=data ;
+
+      const oderid=order.receipt
+
+    console.log("hiiii")
+
+       
+        return new Promise((resolve,reject)=>{
+
+            try {
+
+            DB.booking_schema.updateOne({_id:oderid},{
+
+                  $set:{
+
+                    paystatus:"conform"
+                    
+
+
+                  }
+            }).then(()=>{
+
+                 resolve()
+
+                 console.log("status changed ")
+           
+                }).catch(err=>{
+
+                    reject()
+                })
+            
+            } catch (error) {
+
+                reject()
+                console.log('status changed err')
+                
+            }
+
+
+                
+        })
+
+
     }
 
 

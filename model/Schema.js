@@ -57,7 +57,9 @@ const opAvailabilSchma= new mongoose.Schema({
     pyment:String,
     gender: String,
     fees:String,
-    marking:Boolean
+    marking:Boolean,
+    bookingid:Number,
+    paystatus:String
 
   })
 

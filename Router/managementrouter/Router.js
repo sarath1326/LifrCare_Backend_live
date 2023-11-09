@@ -81,7 +81,40 @@ const control=require("../../Control/adminControl/control")
     })
 
 
+   router.get("/getbooking",(req,res)=>{
 
+       control.getall_bookingdata().then((respo)=>{
+
+             res.json({flag:true,data:respo});
+       }).catch(err=>{
+
+            res.json({flag:false});
+       });
+
+       
+   });
+
+
+   // marking op booking 
+
+
+
+      router.post("/opmarking",(req,res)=>{
+
+         console.log(req.body.data)
+         
+        control.op_booking_marking(req.body.data).then(()=>{
+                
+                res.json({flag:true})
+
+                console.log("ok")
+
+                }).catch(err=>{
+
+                    res.json({flag:false})
+                
+                })
+      })
 
 
 

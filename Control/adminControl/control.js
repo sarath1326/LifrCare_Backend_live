@@ -26,7 +26,7 @@ module.exports = {
                     department: data.department,
                     availabel: data.avilabelday,
                     time: data.time,
-                    fees:data.fees,
+                    fees: data.fees,
                     doctors: doctors_arry
 
                 }
@@ -93,48 +93,129 @@ module.exports = {
 
     },
 
-    
+
 
     // add Doctor op sesssion 
 
 
-      add_doctor:(data)=>{
+    add_doctor: (data) => {
 
-          const {doctoeName , depo }=data
+        const { doctoeName, depo } = data
 
-           return new Promise((resolve,reject)=>{
+        return new Promise((resolve, reject) => {
 
-                try {
+            try {
 
-                     DB.opSchma.updateOne({department:depo},{
+                DB.opSchma.updateOne({ department: depo }, {
 
-                         $push:{
-                            doctors:doctoeName
+                    $push: {
+                        doctors: doctoeName
 
-                         }
-                     }).then((respo)=>{
+                    }
+                }).then((respo) => {
 
-                        console.log(respo);
+                    console.log(respo);
 
-                            resolve();
+                    resolve();
 
-                     }).catch(err=>{
-
-                         reject();
-                     
-                        });
-
-                      
-                    
-                } catch (error) {
+                }).catch(err => {
 
                     reject();
+
+                });
+
+
+
+            } catch (error) {
+
+                reject();
+
+            }
+
+        })
+
+    },
+
+
+    // get all booking data
+
+    getall_bookingdata: () => {
+
+        return new Promise(async(resolve,reject) => {
+
+            try {
+                  
+        const data= await DB.booking_schema.find();
+
+           if(data){
+
+              resolve(data);
+           }else{
+
+             reject();
+           }
+
+        } catch (error) {
+
+             reject();
+
+
+            }
+
+
+        });
+
+
+
+    },
+
+
+
+    // op booking marking
+
+
+    op_booking_marking:(id)=>{
+
+
+        return new Promise((resolve,reject)=>{
+
+               
+                 try {
+
+                    DB.booking_schema.updateOne({bookingid:id},{
+
+                         
+                        $set:{
+                             
+                            marking:false
+                        }
+                    }).then(()=>{
+
+                           resolve()
+                   
+                        }).catch(err=>{
+
+                            reject()
+
+                            
+
+
+                    })
+                
+                } catch (error) {
                     
+                    reject()
+
+                    console.log(error)
+                
                 }
+        })
 
-           })
 
-      }
+
+
+           
+    }
 
 
 
