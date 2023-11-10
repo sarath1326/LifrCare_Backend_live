@@ -318,10 +318,69 @@ router.post("/conform_booking", verifiAuth, async (req, res) => {
     
     
          })
+      
+      })
 
-       
-           
-   })
+      // user get bookings
+
+      router.get("/userget_booking",verifiAuth,async(req,res)=>{
+
+
+         const token=req.cookies.lifeCarejwt;
+
+         const userdata=await jwt.verify(token,"sarath1937");
+
+         const {id}=userdata;
+
+         control.user_get_all_booking(id).then((respo)=>{
+
+                   if(respo.flag){
+                      
+                        res.json({flag:true,data:respo.data});
+                        return;
+                  
+                     }else{
+
+                        res.json({flag:false});
+                        return;
+                     }
+
+         }).catch(err=>{
+
+              
+                 res.json({err:true});
+                 return;
+         })
+      
+      })
+
+
+      // user cancel booking
+
+      
+      router.post("/user_cancel_booking",verifiAuth,(req,res)=>{
+
+                 const id= req.body.data
+
+                   control.user_cancel_booking(id).then(()=>{
+
+                        res.json({flag:true})
+                        return
+                   
+                     }).catch(err=>{
+
+                        res.json({flag:false})
+                        return
+                     
+                     })
+
+
+                  
+      
+      
+            })
+
+
 
 
 

@@ -59,7 +59,9 @@ const opAvailabilSchma= new mongoose.Schema({
     fees:String,
     marking:Boolean,
     bookingid:Number,
-    paystatus:String
+    paystatus:String,
+    cancel:Boolean
+
 
   })
 

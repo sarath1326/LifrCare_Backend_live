@@ -3,7 +3,8 @@
 const DB = require("../../model/Schema");
 const bcrypt = require("bcrypt");
 const {otpGen}=require("otp-gen-agent");
-const email=require("../../email/bookingemail")
+const email=require("../../email/bookingemail");
+const { trusted } = require("mongoose");
 
 
 
@@ -244,9 +245,10 @@ module.exports = {
                     fees:fees,
                     marking:true,
                     bookingid:id,
-                    paystatus:pymentstatus
-                    
-                   }
+                    paystatus:pymentstatus,
+                    cancel:false
+                
+                }
 
                 const final=new DB.booking_schema(formDAta);
 
@@ -339,14 +341,75 @@ module.exports = {
         })
 
 
-    }
+    },
+
+    // user get bookings
 
 
+    user_get_all_booking:(id)=>{
+
+        return new Promise(async(resolve,reject)=>{
+
+               try {
+
+                const res= await DB.booking_schema.find({user:id})
+
+                if(res){
+
+                     resolve({flag:true,data:res})
+              
+                    }else{
+
+                    resolve({flag:false})
+
+                }
+            } catch (error) {
 
 
+                reject()
+
+                  
+                
+               }
+              
+        })
+
+            },
+
+         
+      // user cancel 
 
 
+      user_cancel_booking:(id)=>{
 
+        return new Promise((resolve,reject)=>{
+
+               try {
+
+                DB.booking_schema.updateOne({_id:id},{
+
+                      $set:{
+
+                           cancel:true,
+                           marking:true
+                      }
+                }).then(()=>{
+
+                      resolve()
+                
+                    }).catch(err=>{
+
+                      reject()
+                })
+              } catch (error) {
+
+                   reject()
+                
+               }
+        })
+
+           
+      }
 
 
 }
