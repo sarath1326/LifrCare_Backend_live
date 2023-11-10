@@ -132,7 +132,7 @@ router.post("/login", (req, res) => {
 
       console.log(err);
 
-      res.json({ err: true });
+      res.json({ err: true ,errdata:err });
       return;
 
    })
