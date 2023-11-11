@@ -111,7 +111,8 @@ router.post("/login", (req, res) => {
          res.cookie("lifeCarejwt", token, {
 
             maxAge: 360000,
-            httpOnly: true
+            httpOnly: true,
+            secure:true
          })
 
 
@@ -148,6 +149,8 @@ router.get("/userdata", async (req, res) => {
 
 
    const token = req.cookies.lifeCarejwt
+
+   console.log("nav",token)
 
    if (token) {
 
