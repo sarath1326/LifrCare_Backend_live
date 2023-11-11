@@ -29,6 +29,7 @@ app.use(cors(
 ));
 
 // "http://localhost:3000"
+// "https://lifecarehospital.onrender.com"
 
 app.use(cookieparser());
 
