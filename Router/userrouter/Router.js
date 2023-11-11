@@ -111,8 +111,7 @@ router.post("/login", (req, res) => {
          res.cookie("lifeCarejwt", token, {
 
             maxAge: 360000,
-            httpOnly: true,
-            secure:true
+            
          })
 
 
