@@ -215,7 +215,113 @@ module.exports = {
 
 
            
-    }
+    },
+
+
+    add_docor_details:(data)=>{
+
+        const {details,pin}=data
+
+
+          return new Promise( async (resolve,reject)=>{
+
+             
+            try {
+
+                
+
+                 const save_data={
+
+                    name:details.name,
+                    reno:details.reno,
+                    depart:details.depart,
+                    con:details.con,
+                    pin:pin
+                      
+                      
+                 }
+
+                 const final=new DB.docter_Schema(save_data)
+
+                 final.save().then(()=>{
+
+                      resolve()
+                
+                    }).catch(err=>{
+
+                        reject()
+
+
+                 })
+                
+                } catch (error) {
+
+
+                    reject()
+                
+                }
+
+               
+          })
+    
+    
+    
+    
+        },
+
+
+        get_all_doctor_data:()=>{
+
+               return new Promise(async(resolve,reject)=>{
+
+                  try {
+
+                     const data = await DB.docter_Schema.find()
+
+                     resolve(data)
+                    
+                  } catch (error) {
+
+                    reject()
+                    
+                  }
+
+                    
+               })
+        },
+
+        doctor_verifi_video_call:(data)=>{
+
+             return new Promise(async(resolve,reject)=>{
+
+                try {
+
+           const result =await DB.docter_Schema.findOne({pin:data.pin})
+
+           if(result){
+
+               resolve({flag:true})
+           
+            }else{
+
+                resolve({flag:false})
+
+
+           }
+        } catch (error) {
+
+               reject()
+                    
+                
+            }
+
+
+             })
+        }
+
+
+
+       
 
 
 

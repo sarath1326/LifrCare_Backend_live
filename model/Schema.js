@@ -69,6 +69,31 @@ const opAvailabilSchma= new mongoose.Schema({
   const booking_schema= mongoose.model("booking_data",booking_data_Schema)
 
 
+  const videocalldata=new mongoose.Schema({
+
+         name:String,
+         roomid:String,
+         signalData:Object,
+         flag:Boolean
+  })
+
+
+  const videocall_schema=mongoose.model("videocall_data",videocalldata)
+
+
+  const doctor=new mongoose.Schema({
+
+        name:String,
+        reno:String,
+        depart:String,
+        con:String,
+        pin:Number
+
+  })
+
+  const docter_Schema=mongoose.model("doctor",doctor)
+  
+
 
  
  
@@ -76,9 +101,13 @@ const opAvailabilSchma= new mongoose.Schema({
     
     opSchma,
     userModel,
-    booking_schema
+    booking_schema,
+    videocall_schema,
+    docter_Schema
 
 }
+
+
 
 
 

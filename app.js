@@ -8,6 +8,9 @@ const managmentrouter= require("./Router/managementrouter/Router");
 const dataBase=require("./model/DBconnect");
 const cookieparser=require("cookie-parser");
 const bodyparser= require("body-parser")
+const {Server}=require("socket.io")
+const socketConnection=require("./Socketio/Socket")
+
 
 
 
@@ -19,7 +22,7 @@ app.use(cors(
 
 
       {
-        origin:"https://lifecarehospital.onrender.com",
+        origin:"http://localhost:3000",
         methods:["GET","POST","DELETE"],
         credentials:true
       }
@@ -32,6 +35,20 @@ app.use(cors(
 // "https://lifecarehospital.onrender.com"
 
 app.use(cookieparser());
+
+const io= new Server({
+  cors:true
+})
+
+io.on("connection",(socket)=>{
+
+ socketConnection.socketconnection(socket)
+
+  })
+
+
+
+
 
 
 app.use("/",userrouter);
@@ -54,6 +71,8 @@ app.listen(3001,()=>{
     console.log("server started");
 
 });
+
+io.listen(8000)
 
 
 

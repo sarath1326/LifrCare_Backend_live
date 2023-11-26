@@ -92,3 +92,48 @@ var instance = new Razorpay({
    }
 
 
+   module.exports.online_consult_generateRazorpay=(fee)=>{
+
+      return new Promise((resolve,reject)=>{
+  
+          var options = {
+              amount: fee*100,
+              currency: "INR",
+              receipt: "" + "7592831937",
+           };
+           instance.orders.create(options, function (err, order) {
+     
+              if (err) {
+                 
+                  reject()
+  
+              } else {
+     
+     
+                 resolve(order)
+     
+              }
+     
+     
+     
+           })
+  
+  
+  
+  
+  
+      })
+  
+     
+  
+  
+  
+   }
+  
+
+
+
+
+
+
+

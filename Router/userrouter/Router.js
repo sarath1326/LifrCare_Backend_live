@@ -385,6 +385,64 @@ router.post("/conform_booking", verifiAuth, async (req, res) => {
             })
 
 
+            // user online consultation pyment process
+
+
+
+            router.post("/online_pyment",verifiAuth,async(req,res)=>{
+
+                   const fee=req.body.fee
+
+                   const token= req.cookies.lifeCarejwt
+
+                   const userdata= await jwt.verify(token,"sarath1937")
+
+                   console.log(fee)
+
+                   console.log(userdata.id)
+
+                   Razorpay.online_consult_generateRazorpay(fee).then((oderid)=>{
+
+                     res.json({razor:true,razor_oderid:oderid})
+                     return
+                  
+                  }).catch(err=>{
+
+                          res.json({razor:false})
+                          return
+
+
+                   })
+                  
+                  })
+
+
+                  router.post("/pyment_verification",(req,res)=>{
+
+                     console.log("pyment verifi")
+
+                     Razorpay.pyment_verify(req.body).then(()=>{
+
+                        res.json({flag:true})
+
+
+                     }).catch(err=>{
+
+                       res.json({flag:false})
+                         
+                         
+                     })
+
+                        
+                  })
+
+
+         
+
+
+            
+
+
 
 
 

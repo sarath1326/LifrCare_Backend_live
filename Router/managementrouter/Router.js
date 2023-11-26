@@ -4,6 +4,7 @@
 const express= require("express");
 const router=express();
 const control=require("../../Control/adminControl/control")
+const {otpGen}=require("otp-gen-agent")
 
 
  
@@ -117,7 +118,75 @@ const control=require("../../Control/adminControl/control")
       })
 
 
+      router.post("/doctor_add",async(req,res)=>{
 
+       
+
+        const doctor_pin=await otpGen()
+
+           const data={
+               
+                 details:req.body.data,
+                 pin:doctor_pin
+           }
+
+          control.add_docor_details(data).then(()=>{
+
+                  
+             res.json({flag:true,pin:doctor_pin})
+                  
+
+               }).catch(err=>{
+
+
+                 res.json({flag:false})
+
+                 
+          })
+
+             
+      })
+
+
+      router.get("/getdoctordata",(req,res)=>{
+
+                control.get_all_doctor_data().then((respo)=>{
+
+                        res.json({flag:true,data:respo})
+                
+                    }).catch(err=>{
+
+
+                        res.json({flag:false})
+
+
+                })
+      })
+
+
+
+       router.post("/doctor_verifi",(req,res)=>{
+
+
+            control.doctor_verifi_video_call(req.body.data).then((respo)=>{
+
+                    if(respo.flag){
+
+                          res.json({flag:true})
+                          return
+                    }else{
+
+                        res.json({flag:false})
+
+
+                    }
+            }).catch(err=>{
+
+                   res.json({err:true})
+            })
+
+               
+       })
 
 
 
