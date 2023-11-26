@@ -22,7 +22,7 @@ app.use(cors(
 
 
       {
-        origin:"http://localhost:3000",
+        origin:["https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com"],
         methods:["GET","POST","DELETE"],
         credentials:true
       }
