@@ -2,6 +2,7 @@
 
 const express=require("express");
 const app=express();
+const cors=require("cors")
 const userrouter=require("./Router/userrouter/Router");
 const managmentrouter= require("./Router/managementrouter/Router");
 const dataBase=require("./model/DBconnect");
@@ -25,7 +26,7 @@ const io = require("socket.io")(Server, {
 	cors: {
             origin:["https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com"],
             methods:["GET","POST","DELETE"],
-            credentials:true
+           
 
   } 
           
@@ -34,18 +35,18 @@ const io = require("socket.io")(Server, {
 
 
 
-// app.use(cors(
+app.use(cors(
 
 
-//       {
-//         origin:["http://localhost:3000","http://localhost:3001"],
-//         methods:["GET","POST","DELETE"],
-//         credentials:true
-//       }
+      {
+        origin:["https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com"],
+        methods:["GET","POST","DELETE"],
+        credentials:true
+      }
 
 
 
-// ));
+));
 
 // "http://localhost:3000"
 // "https://lifecarehospital.onrender.com"
