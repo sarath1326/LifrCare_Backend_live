@@ -2,13 +2,11 @@
 
 const express=require("express");
 const app=express();
-const cors=require('cors')
 const userrouter=require("./Router/userrouter/Router");
 const managmentrouter= require("./Router/managementrouter/Router");
 const dataBase=require("./model/DBconnect");
 const cookieparser=require("cookie-parser");
 const bodyparser= require("body-parser")
-
 const socketConnection=require("./Socketio/Socket")
 const http=require("http")
 const Server=http.createServer(app)
@@ -75,16 +73,7 @@ io.on("connection",(socket)=>{
 
 
 
-
-
-
-
-
-
-
-
-
-  app.use("/",userrouter);
+app.use("/",userrouter);
 app.use("/manage",managmentrouter);
 
 dataBase.DB();
