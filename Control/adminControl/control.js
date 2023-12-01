@@ -100,13 +100,17 @@ module.exports = {
 
     add_doctor: (data) => {
 
-        const { doctoeName, depo } = data
+        const { doctoeName, depo } = data.data
+
+        console.log(doctoeName)
+
+       
 
         return new Promise((resolve, reject) => {
 
             try {
 
-                DB.opSchma.updateOne({ department: depo }, {
+                DB.opSchma.updateOne({ _id:depo }, {
 
                     $push: {
                         doctors: doctoeName

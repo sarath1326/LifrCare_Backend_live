@@ -15,10 +15,12 @@ const {otpGen}=require("otp-gen-agent")
 
       control.op_newdep_add(req.body).then(()=>{
 
+        res.json({flag:true})
+
       
       }).catch(err=>{
 
-
+          res.json({flag:false})
 
       })
 
@@ -50,8 +52,9 @@ const {otpGen}=require("otp-gen-agent")
       })
 
 
-    router.post("/add_doctor",(req,res)=>{
+    router.post("/add_op_doctor",(req,res)=>{
 
+       
           control.add_doctor(req.body).then(()=>{
 
 
@@ -61,7 +64,7 @@ const {otpGen}=require("otp-gen-agent")
 
                         res.json({flag:true,data:respo.data}); 
 
-                       console.log(respo.data)
+                      
 
 
                     }else{

@@ -113,6 +113,33 @@ const socketconnection=(socket)=>{
               
         })
 
+
+        socket.on("leve_session_from_user",(data)=>{
+
+                const {to,from}=data
+
+                console.log(to)
+                
+               const socketid=nameToSocketMapping.get(to)
+
+                socket.to(socketid).emit("leve_req_user",{from:from})
+       
+       
+            })
+
+
+            socket.on("doctor_sent_leve_req",(data)=>{
+
+                    
+                const {to}=data
+                 
+                   const socketid=roomidtosocketmapping.get(to)
+
+                    socket.to(socketid).emit("doctor_leve_req")
+            
+            
+                })
+
         
       
       
