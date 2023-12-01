@@ -246,7 +246,9 @@ module.exports = {
                     marking:true,
                     bookingid:id,
                     paystatus:pymentstatus,
-                    cancel:false
+                    cancel:false,
+                    reschedule:false,
+                    new:true
                 
                 }
 
@@ -409,7 +411,82 @@ module.exports = {
         })
 
            
+      },
+
+      // reschadule update 
+
+
+      reschadule_date:(data)=>{
+
+           return new Promise((resolve,reject)=>{
+
+              try {
+
+                DB.booking_schema.updateOne({_id:data.id},{
+
+                      
+                    $set:{
+
+                          date:data.date,
+                          marking:true,
+                          reschedule:true
+
+                          
+                    }
+                }).then(()=>{
+
+                     resolve()
+                
+                    }).catch(err=>{
+
+                        console.log(err)
+
+
+                })
+                
+              } catch (error) {
+
+                reject()
+                
+              }
+
+                
+           })
+      },
+
+
+      video_call_control_check:()=>{
+
+
+              
+            return new Promise(async (resolve,reject)=>{
+
+
+                   try {
+
+                    const result=await DB.video_control_schema.findOne({id:"75928"})
+
+                    if(result.flag){
+       
+                          resolve({flag:true})
+                    }else{
+       
+                        resolve({flag:false})
+                    }
+                
+                } catch (error) {
+
+                    reject()
+
+                    
+                    
+                   }
+            })
       }
+
+
+
+        
 
 
 }

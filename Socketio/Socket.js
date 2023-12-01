@@ -26,6 +26,9 @@ const socketconnection=(socket)=>{
               sockettonamemapping.set(socket.id,name)
               socket.emit("succc_login_doctor")
               console.log("doctor login ok")
+
+              control.video_call_control({flag:true})
+              
        })
 
        socket.on("user_join_req",(data)=>{

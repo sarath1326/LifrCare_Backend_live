@@ -435,6 +435,57 @@ router.post("/conform_booking", verifiAuth, async (req, res) => {
 
                         
                   })
+                  
+                  
+       router.post("/reschadule_date",(req,res)=>{
+
+                 
+                     control.reschadule_date(req.body).then(()=>{
+
+                           res.json({flag:true})
+                           return
+                   
+                        }).catch(err=>{
+
+                           res.json({flag:false})
+                           return
+
+
+                     })
+       })
+
+
+
+       router.get("/videocall_control_check",(req,res)=>{
+
+
+         control.video_call_control_check().then((respo)=>{
+
+                if(respo.flag){
+
+                      res.json({flag:true})
+                      return
+                
+                     }else{
+
+                        res.json({flag:false})
+                        return
+
+
+                }
+         }).catch(err=>{
+
+                res.json({err:true})
+                return
+         })
+
+               
+       })
+       
+       
+
+
+
 
 
          

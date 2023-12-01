@@ -191,7 +191,8 @@ module.exports = {
                          
                         $set:{
                              
-                            marking:false
+                            marking:false,
+                            new:false
                         }
                     }).then(()=>{
 
@@ -321,8 +322,117 @@ module.exports = {
 
 
              })
-        }
+        },
 
+
+        // user booking cancel
+
+
+          booking_cancel:((data)=>{
+
+          
+
+                 return new Promise( async (resolve,reject)=>{
+
+                        try {
+
+                           DB.booking_schema.deleteOne({bookingid:data.id}).then(()=>{
+
+                                 resolve()
+                          
+                                }).catch(err=>{
+
+                               reject()
+                           })
+                            
+                        } catch (error) {
+
+                            reject()
+                            
+                        }
+                 })
+          }),
+
+
+
+          // user resudule  
+
+
+          resudule:(data)=>{
+
+
+            return new Promise((resolve,reject)=>{
+
+                    try {
+
+                        DB.booking_schema.updateOne({bookingid:data.id},{
+
+                              $set:{
+
+                                   marking:false,
+                                   reschedule:false
+                              }
+                        }).then(()=>{
+
+                             resolve()
+                        
+                            }).catch(err=>{
+
+                             reject()
+                        })
+                    
+                    } catch (error) {
+
+                        reject()
+                        
+                    }
+            })
+          
+        },
+
+        
+    video_call_control:(data)=>{
+
+        return new Promise( async (resolve,reject)=>{
+
+
+            try {
+
+                  DB.video_control_schema.updateOne({id:"75928"},{
+
+                       $set:{
+                          
+                         flag:data.flag
+                       }
+                  }).then(()=>{
+
+                       console.log("video control ok")
+
+                       resolve()
+                  
+                    }).catch(err=>{
+
+                      console.log("video call err")
+                      reject()
+                  })
+                
+            } catch (error) {
+
+                reject()
+                
+            }
+
+           
+
+        
+
+             
+        })
+ }
+
+
+
+       
 
 
        

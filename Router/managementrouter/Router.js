@@ -192,6 +192,56 @@ const {otpGen}=require("otp-gen-agent")
        })
 
 
+       router.post("/bookingcancel",(req,res)=>{
+
+
+             control.booking_cancel(req.body).then(()=>{
+
+                res.json({flag:true})
+                return
+            
+            }).catch(err=>{
+
+                res.json({flag:false})
+
+                  
+             })
+      
+        })
+
+
+        router.post("/resudule_update",(req,res)=>{
+
+                 control.resudule(req.body).then(()=>{
+
+                        res.json({flag:true})
+                        return
+                
+                    }).catch(err=>{
+
+                        res.json({flag:false})
+                        return
+                    
+                    })
+        })
+
+
+        router.post("/video_call_control",(req,res)=>{
+
+               control.video_call_control({flag:false}).then(()=>{
+
+                       res.json({flag:true})
+               
+                    }).catch(err=>{
+
+                  res.json({flag:false})
+               })
+        })
+
+
+        
+
+
 
 
 

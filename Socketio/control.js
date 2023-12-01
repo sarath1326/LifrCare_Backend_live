@@ -76,7 +76,49 @@ const DB =require("../model/Schema")
               })
             
             })
-    }
+    },
+
+    video_call_control:(data)=>{
+
+        return new Promise( async (resolve,reject)=>{
+
+
+            try {
+
+                  DB.video_control_schema.updateOne({id:"75928"},{
+
+                       $set:{
+                          
+                         flag:data.flag
+                       }
+                  }).then(()=>{
+
+                       console.log("video control ok")
+
+                       resolve()
+                  
+                    }).catch(err=>{
+
+                      console.log("video call err")
+                      reject()
+                  })
+                
+            } catch (error) {
+
+                reject()
+                
+            }
+
+           
+
+        
+
+             
+        })
+ }
+
+
+
 
    
  }

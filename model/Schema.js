@@ -60,7 +60,10 @@ const opAvailabilSchma= new mongoose.Schema({
     marking:Boolean,
     bookingid:Number,
     paystatus:String,
-    cancel:Boolean
+    cancel:Boolean,
+    reschedule:Boolean,
+    new:Boolean
+   
 
 
   })
@@ -92,6 +95,15 @@ const opAvailabilSchma= new mongoose.Schema({
   })
 
   const docter_Schema=mongoose.model("doctor",doctor)
+
+
+  const video_control=new mongoose.Schema({
+
+          id:String,
+          flag:Boolean
+  })
+
+  const video_control_schema=mongoose.model("video_control",video_control)
   
 
 
@@ -103,7 +115,8 @@ const opAvailabilSchma= new mongoose.Schema({
     userModel,
     booking_schema,
     videocall_schema,
-    docter_Schema
+    docter_Schema,
+    video_control_schema
 
 }
 
