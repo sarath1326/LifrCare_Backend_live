@@ -16,11 +16,13 @@ const {otpGen}=require("otp-gen-agent")
       control.op_newdep_add(req.body).then(()=>{
 
         res.json({flag:true})
+        return
 
       
       }).catch(err=>{
 
           res.json({flag:false})
+          return
 
       })
 

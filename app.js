@@ -39,7 +39,7 @@ app.use(cors(
 
 
       {
-        origin:[ "https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com"],
+        origin:[ "https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com" ],
         methods:["GET","POST","DELETE"],
         credentials:true
       }
