@@ -8,6 +8,7 @@ const mongoose=require("mongoose");
 // 'mongodb://127.0.0.1/lifeCare'
 
 module.exports.DB=()=>{
+    
 
     mongoose.connect("mongodb+srv://sarathsarath93366:sarath1937@cluster0.qzzx2xq.mongodb.net/?retryWrites=true&w=majority").then(()=>{
 
