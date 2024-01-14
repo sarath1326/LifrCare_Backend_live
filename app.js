@@ -14,7 +14,6 @@ const Server=http.createServer(app)
 
 
 
-
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(bodyparser.json());
@@ -24,46 +23,25 @@ app.use(bodyparser.urlencoded({extended:true}))
 
 const io = require("socket.io")(Server, {
 	cors: {
-            origin:["https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com"          ],
-            methods:["GET","POST","DELETE"],
-           
-
-  } 
+    
+    origin:["https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com"],
+    methods:["GET","POST","DELETE"],
           
-})
+          } })
 
 
-
-
-app.use(cors(
-
-
-      {
-        origin:[ "https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com"      ],
+app.use(cors( {
+        
+        origin:[ "https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com"],
         methods:["GET","POST","DELETE"],
         credentials:true
       }
+      
+      ));
 
 
-
-));
-
-// "http://localhost:3000","http://localhost:3001"
-// "https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com"
 
 app.use(cookieparser());
-
-
-
-// const io= new Server({
-//   cors:true
-// })
-
-
-
-
-
-
 
 io.on("connection",(socket)=>{
 
@@ -81,25 +59,11 @@ dataBase.DB();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// app.listen(3002,()=>{
-
-//     console.log("server started");
-
-// });
-
-// io.listen(8000)
-
-
-
 Server.listen(3002, () => console.log("server started"))
+
+
+
+
+
+// "http://localhost:3000","http://localhost:3001"
+// "https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com"
