@@ -109,6 +109,7 @@ router.post("/login", (req, res) => {
          const token = jwt.sign({ name: name, id: _id }, "sarath1937");
 
          res.cookie("lifeCarejwt", token, {
+           
             maxAge: 360000,
             sameSite:"none",
             secure:true,
@@ -159,6 +160,7 @@ router.get("/userdata", async (req, res) => {
 
       if (userData) {
 
+          console.log(userData.name)
          res.json({ flag: true, data: userData });
          return;
 
@@ -481,6 +483,8 @@ router.post("/conform_booking", verifiAuth, async (req, res) => {
 
                
        })
+
+       
        
        
 
