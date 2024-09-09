@@ -1,16 +1,14 @@
 
 
 const mongoose=require("mongoose");
+require("dotenv").config()
 
-// "mongodb+srv://sarathsarath93366:sarath1937@cluster0.qzzx2xq.mongodb.net/?retryWrites=true&w=majority"
 
-
-// 'mongodb://127.0.0.1/lifeCare'
 
 module.exports.DB=()=>{
     
 
-    mongoose.connect('mongodb://127.0.0.1/lifeCare').then(()=>{
+    mongoose.connect(process.env.MONGODB_URL).then(()=>{
 
                   console.log("DB connected");
 
