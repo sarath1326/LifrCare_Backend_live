@@ -108,7 +108,7 @@ module.exports = {
     },
 
 
-
+ // get all op department
 
     get_all_opdep: () => {
 
@@ -279,6 +279,8 @@ module.exports = {
     },
 
 
+    // add  working doctors
+
     add_docor_details: (data) => {
 
         const { details, pin } = data
@@ -294,9 +296,9 @@ module.exports = {
                 const save_data = {
 
                     name: details.name,
-                    reno: details.reno,
-                    depart: details.depart,
-                    con: details.con,
+                    reno: details.registerno,
+                    depart: details.department,
+                    con: details.contact,
                     pin: pin
 
 
@@ -329,6 +331,8 @@ module.exports = {
 
 
     },
+
+    // get all doctor data
 
 
     get_all_doctor_data: () => {
@@ -411,7 +415,7 @@ module.exports = {
 
 
 
-    // user resudule  
+    // user reschedule  
 
 
     resudule: (data) => {
