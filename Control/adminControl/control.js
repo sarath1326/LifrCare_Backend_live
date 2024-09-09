@@ -19,7 +19,14 @@ module.exports = {
 
                 let doctors_arry = []
 
-                doctors_arry = data.doctorname
+                let obj = {
+
+                    doctorName: data.doctorname,
+                    available: true
+
+                }
+
+                doctors_arry.push(obj)
 
                 let addvalue = {
 
@@ -60,6 +67,48 @@ module.exports = {
         });
 
     },
+
+
+    //  edit op department data 
+
+
+    op_department_data_edit: (data) => {
+
+        return new Promise(async (resolve, reject) => {
+
+            try {
+
+                const result = await DB.opSchma.findByIdAndUpdate(  // db data edit
+                    { _id: data._id },
+
+                    {
+
+                        department: data.department,
+                        availabel: data.availabel,
+                        time: data.time,
+                        doctors: data.doctors,
+                        fees: data.fees
+
+
+                    }
+
+                )
+
+                resolve()
+
+            } catch (error) {
+
+
+                reject()
+
+            }
+        })
+
+
+    },
+
+
+
 
     get_all_opdep: () => {
 
@@ -104,16 +153,23 @@ module.exports = {
 
         console.log(doctoeName)
 
-       
+        let obj = {
+
+            doctorName: doctoeName,
+            available: true
+
+        }
+
+
 
         return new Promise((resolve, reject) => {
 
             try {
 
-                DB.opSchma.updateOne({ _id:depo }, {
+                DB.opSchma.updateOne({ _id: depo }, {
 
                     $push: {
-                        doctors: doctoeName
+                        doctors: obj
 
                     }
                 }).then((respo) => {
@@ -145,23 +201,23 @@ module.exports = {
 
     getall_bookingdata: () => {
 
-        return new Promise(async(resolve,reject) => {
+        return new Promise(async (resolve, reject) => {
 
             try {
-                  
-        const data= await DB.booking_schema.find();
 
-           if(data){
+                const data = await DB.booking_schema.find();
 
-              resolve(data);
-           }else{
+                if (data) {
 
-             reject();
-           }
+                    resolve(data);
+                } else {
 
-        } catch (error) {
+                    reject();
+                }
 
-             reject();
+            } catch (error) {
+
+                reject();
 
 
             }
@@ -178,264 +234,264 @@ module.exports = {
     // op booking marking
 
 
-    op_booking_marking:(id)=>{
+    op_booking_marking: (id) => {
 
 
-        return new Promise((resolve,reject)=>{
-
-               
-                 try {
-
-                    DB.booking_schema.updateOne({bookingid:id},{
-
-                         
-                        $set:{
-                             
-                            marking:false,
-                            new:false
-                        }
-                    }).then(()=>{
-
-                           resolve()
-                   
-                        }).catch(err=>{
-
-                            reject()
-
-                            
+        return new Promise((resolve, reject) => {
 
 
-                    })
-                
-                } catch (error) {
-                    
-                    reject()
-
-                    console.log(error)
-                
-                }
-        })
-
-
-
-
-           
-    },
-
-
-    add_docor_details:(data)=>{
-
-        const {details,pin}=data
-
-
-          return new Promise( async (resolve,reject)=>{
-
-             
             try {
 
-                
-
-                 const save_data={
-
-                    name:details.name,
-                    reno:details.reno,
-                    depart:details.depart,
-                    con:details.con,
-                    pin:pin
-                      
-                      
-                 }
-
-                 const final=new DB.docter_Schema(save_data)
-
-                 final.save().then(()=>{
-
-                      resolve()
-                
-                    }).catch(err=>{
-
-                        reject()
+                DB.booking_schema.updateOne({ bookingid: id }, {
 
 
-                 })
-                
-                } catch (error) {
+                    $set: {
 
-
-                    reject()
-                
-                }
-
-               
-          })
-    
-    
-    
-    
-        },
-
-
-        get_all_doctor_data:()=>{
-
-               return new Promise(async(resolve,reject)=>{
-
-                  try {
-
-                     const data = await DB.docter_Schema.find()
-
-                     resolve(data)
-                    
-                  } catch (error) {
-
-                    reject()
-                    
-                  }
-
-                    
-               })
-        },
-
-        doctor_verifi_video_call:(data)=>{
-
-             return new Promise(async(resolve,reject)=>{
-
-                try {
-
-           const result =await DB.docter_Schema.findOne({pin:data.pin})
-
-           if(result){
-
-               resolve({flag:true})
-           
-            }else{
-
-                resolve({flag:false})
-
-
-           }
-        } catch (error) {
-
-               reject()
-                    
-                
-            }
-
-
-             })
-        },
-
-
-        // user booking cancel
-
-
-          booking_cancel:((data)=>{
-
-          
-
-                 return new Promise( async (resolve,reject)=>{
-
-                        try {
-
-                           DB.booking_schema.deleteOne({bookingid:data.id}).then(()=>{
-
-                                 resolve()
-                          
-                                }).catch(err=>{
-
-                               reject()
-                           })
-                            
-                        } catch (error) {
-
-                            reject()
-                            
-                        }
-                 })
-          }),
-
-
-
-          // user resudule  
-
-
-          resudule:(data)=>{
-
-
-            return new Promise((resolve,reject)=>{
-
-                    try {
-
-                        DB.booking_schema.updateOne({bookingid:data.id},{
-
-                              $set:{
-
-                                   marking:false,
-                                   reschedule:false
-                              }
-                        }).then(()=>{
-
-                             resolve()
-                        
-                            }).catch(err=>{
-
-                             reject()
-                        })
-                    
-                    } catch (error) {
-
-                        reject()
-                        
+                        marking: false,
+                        new: false
                     }
-            })
-          
-        },
+                }).then(() => {
 
-        
-    video_call_control:(data)=>{
+                    resolve()
 
-        return new Promise( async (resolve,reject)=>{
+                }).catch(err => {
+
+                    reject()
 
 
-            try {
 
-                  DB.video_control_schema.updateOne({id:"75928"},{
 
-                       $set:{
-                          
-                         flag:data.flag
-                       }
-                  }).then(()=>{
+                })
 
-                       console.log("video control ok")
-
-                       resolve()
-                  
-                    }).catch(err=>{
-
-                      console.log("video call err")
-                      reject()
-                  })
-                
             } catch (error) {
 
                 reject()
-                
+
+                console.log(error)
+
+            }
+        })
+
+
+
+
+
+    },
+
+
+    add_docor_details: (data) => {
+
+        const { details, pin } = data
+
+
+        return new Promise(async (resolve, reject) => {
+
+
+            try {
+
+
+
+                const save_data = {
+
+                    name: details.name,
+                    reno: details.reno,
+                    depart: details.depart,
+                    con: details.con,
+                    pin: pin
+
+
+                }
+
+                const final = new DB.docter_Schema(save_data)
+
+                final.save().then(() => {
+
+                    resolve()
+
+                }).catch(err => {
+
+                    reject()
+
+
+                })
+
+            } catch (error) {
+
+
+                reject()
+
             }
 
-           
 
-        
-
-             
         })
- }
 
 
 
-       
+
+    },
 
 
-       
+    get_all_doctor_data: () => {
+
+        return new Promise(async (resolve, reject) => {
+
+            try {
+
+                const data = await DB.docter_Schema.find()
+
+                resolve(data)
+
+            } catch (error) {
+
+                reject()
+
+            }
+
+
+        })
+    },
+
+    doctor_verifi_video_call: (data) => {
+
+        return new Promise(async (resolve, reject) => {
+
+            try {
+
+                const result = await DB.docter_Schema.findOne({ pin: data.pin })
+
+                if (result) {
+
+                    resolve({ flag: true })
+
+                } else {
+
+                    resolve({ flag: false })
+
+
+                }
+            } catch (error) {
+
+                reject()
+
+
+            }
+
+
+        })
+    },
+
+
+    // user booking cancel
+
+
+    booking_cancel: ((data) => {
+
+
+
+        return new Promise(async (resolve, reject) => {
+
+            try {
+
+                DB.booking_schema.deleteOne({ bookingid: data.id }).then(() => {
+
+                    resolve()
+
+                }).catch(err => {
+
+                    reject()
+                })
+
+            } catch (error) {
+
+                reject()
+
+            }
+        })
+    }),
+
+
+
+    // user resudule  
+
+
+    resudule: (data) => {
+
+
+        return new Promise((resolve, reject) => {
+
+            try {
+
+                DB.booking_schema.updateOne({ bookingid: data.id }, {
+
+                    $set: {
+
+                        marking: false,
+                        reschedule: false
+                    }
+                }).then(() => {
+
+                    resolve()
+
+                }).catch(err => {
+
+                    reject()
+                })
+
+            } catch (error) {
+
+                reject()
+
+            }
+        })
+
+    },
+
+
+    video_call_control: (data) => {
+
+        return new Promise(async (resolve, reject) => {
+
+
+            try {
+
+                DB.video_control_schema.updateOne({ id: "75928" }, {
+
+                    $set: {
+
+                        flag: data.flag
+                    }
+                }).then(() => {
+
+                    console.log("video control ok")
+
+                    resolve()
+
+                }).catch(err => {
+
+                    console.log("video call err")
+                    reject()
+                })
+
+            } catch (error) {
+
+                reject()
+
+            }
+
+
+
+
+
+
+        })
+    }
+
+
+
+
+
+
+
 
 
 

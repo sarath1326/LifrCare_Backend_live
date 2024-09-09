@@ -32,7 +32,7 @@ const io = require("socket.io")(Server, {
 
 app.use(cors( {
         
-        origin:[ "http://localhost:3000"],
+        origin:[ "http://localhost:3000" , "http://localhost:3001" ],
         methods:["GET","POST","DELETE"],
         credentials:true
       }

@@ -32,7 +32,7 @@ const {otpGen}=require("otp-gen-agent")
 
 
 
-      router.get("/alldepa",(req,res)=>{
+      router.get("/get_all_depart",(req,res)=>{
 
               control.get_all_opdep().then((respo)=>{
 
@@ -52,6 +52,31 @@ const {otpGen}=require("otp-gen-agent")
             })
 
       })
+
+     
+     
+      // post router for edit op department data
+
+      router.post("/edit_op_department",(req,res)=>{
+
+        console.log(req.body.data)
+
+             control.op_department_data_edit(req.body.data).then(()=>{
+
+                    res.json({flag:true})
+                    
+             }).catch(err=>{
+
+                  res.json({flag:false})
+             })
+
+     
+        })
+
+
+
+
+
 
 
     router.post("/add_op_doctor",(req,res)=>{
