@@ -464,7 +464,7 @@ module.exports = {
 
                    try {
 
-                    const result=await DB.video_control_schema.findOne({id:"75928"})
+                    const result=await DB.video_control_schema.findOne()
 
                     if(result.flag){
        

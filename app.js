@@ -24,7 +24,7 @@ app.use(bodyparser.urlencoded({extended:true}))
 const io = require("socket.io")(Server, {
 	cors: {
     
-    origin:["https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com"],
+    origin:["http://localhost:3000","http://localhost:3001" ],
     methods:["GET","POST","DELETE"],
           
           } })
@@ -32,7 +32,7 @@ const io = require("socket.io")(Server, {
 
 app.use(cors( {
         
-        origin:["https://lifecarehospital.onrender.com","https://lifecare-managment.onrender.com" ],
+        origin:["http://localhost:3000","http://localhost:3001" ],
         methods:["GET","POST","DELETE"],
         credentials:true
       }
@@ -59,7 +59,7 @@ dataBase.DB();
 
 
 
-Server.listen(3002, () => console.log("server started"))
+Server.listen(3005, () => console.log("server started"))
 
 
 
